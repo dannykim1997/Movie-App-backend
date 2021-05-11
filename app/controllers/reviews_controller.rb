@@ -2,9 +2,9 @@ class ReviewsController < ApplicationController
 
     before_action :find_review, only: [:show, :edit, :update, :delete]
 
-    def index
+      def index
         @reviews = Review.all
-        render json: @reviews
+        render json: @reviews, include: [:movie, :user]
       end
 
       def show
