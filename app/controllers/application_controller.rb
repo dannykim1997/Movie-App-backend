@@ -14,10 +14,10 @@ class ApplicationController < ActionController::API
       render :json => { "msg": "Login first.." }
       return nil
     end
-    @user = User.find_by(id: payload[0]["user_id"])
+    @@user = User.find_by(id: payload[0]["user_id"])
     end
   end
-  
+
   def auth_headers
     request.headers["Authorization"]
   end

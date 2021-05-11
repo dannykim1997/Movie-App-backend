@@ -3,8 +3,13 @@ class ReviewsController < ApplicationController
     before_action :find_review, only: [:show, :edit, :update, :delete]
     before_action :authorized, only: [:index]
 
+      # def index
+      #   reviews = current_user.reviews
+      #   render json: ReviewSerializer.new(reviews).serialized_json
+      # end
+
       def index
-        reviews = current_user.reviews
+        reviews = Review.all
         render json: ReviewSerializer.new(reviews).serialized_json
       end
 
@@ -21,9 +26,9 @@ class ReviewsController < ApplicationController
       end
 
       def create
-        review = Review.new(params[:review])
+        review = Review.new(review_params)
         if review.save
-          render json: ReviewSerializer.new(reviews).serialized_json
+          render json: ReviewSerializer.new(review).serialized_json
         else
           render json: { msg: 'Something went wrong'}
         end
