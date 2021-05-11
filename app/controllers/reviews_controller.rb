@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
         if review
           render json: ReviewSerializer.new(review).serialized_json
         else
-          render json: {message: 'Review not found'}
+          render json: {message: 'Review not found', error: review.errors}
         end
       end
       
