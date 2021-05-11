@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
+  
+resources :users
+get '/populartv', to: "movies#get_tv_popular"
+get '/popularmovies', to: "movies#popular_movies"
+get '/comedymovies', to: "movies#comedy_movies"
+
 resources :users, only: [:index, :create]
+
 
 resources :movies
 resources :reviews
