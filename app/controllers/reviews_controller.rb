@@ -1,34 +1,38 @@
 class ReviewsController < ApplicationController
 
     before_action :find_review, only: [:show, :edit, :update, :delete]
+    before_action :check_if_logged_in?, only: [:index]
 
       def index
-        @reviews = Review.all
-        render json: @reviews, include: [:movie, :user]
+        reviews = @user.reviews
+        render json: ReviewSerializer.new(reviews).serialized_json
       end
 
       def show
+        if review
+          render json: ReviewSerializer.new(review).serialized_json
+        else
+          render json: {message: 'Review not found'}
+        end
       end
       
       def new
-        @review = Review.new
+        review = Review.new
       end
 
       def create
-        @review = Review.new(params[:review])
-        if @review.save
-          flash[:success] = "Review successfully created"
-          redirect_to @review
+        review = Review.new(params[:review])
+        if review.save
+          render json: ReviewSerializer.new(reviews).serialized_json
         else
-          flash[:error] = "Something went wrong"
-          redirect_to 'new'
+          render json: { msg: 'Something went wrong'}
         end
       end
 
       private
 
       def find_review
-        @review = Review.find_by(id: 
+        review = Review.find_by(id: 
         params[:id]
         )
       end

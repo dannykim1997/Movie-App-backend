@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
     # end
 
     def index
-        @movies = Movie.all
-        render json: @movies
+        movies = Movie.all
+        render json: MovieSerializer.new(movies).serialized_json
     end
 end

@@ -19,6 +19,7 @@ gem 'jwt'
 gem 'dotenv-rails'
 
 gem 'awesome_print'
+gem 'fast_jsonapi'
 
 gem "rest-client"
 # Use Active Storage variant
