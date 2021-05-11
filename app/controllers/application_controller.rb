@@ -1,9 +1,16 @@
 class ApplicationController < ActionController::API
-
-    def check_if_logged_in?
-        if request.headers['user-id'].nil?
-            render json: { "msg": "Login first..."}
-        end
-        user = User.find_by(id: request.headers['user-id'])
+  def current_user
+    token = request.headers["token"]
+    begin
+      payload = JWT.decode token, "myS3cr3t", true
+    rescue JWT::VerificationError
+      render :json => { "msg": "Login first.." }
+      return nil
     end
+    @user = User.find_by(id: payload[0]["user_id"])
+  end
+
+  def authorized
+    !!current_user
+  end
 end
