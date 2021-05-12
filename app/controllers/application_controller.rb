@@ -2,14 +2,14 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
-    JWT.encode payload, "myS3cr3t"
+    JWT.encode payload, ENV['SUPER_SECRET_KEY']
   end
   
   def current_user
     if auth_headers 
       token = auth_headers.split(' ')[1] 
     begin
-      payload = JWT.decode token, "myS3cr3t", true
+      payload = JWT.decode token, ENV['SUPER_SECRET_KEY'], true
     rescue JWT::VerificationError
       render :json => { "msg": "Login first.." }
       return nil
