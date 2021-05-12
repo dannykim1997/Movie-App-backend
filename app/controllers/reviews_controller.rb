@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
     before_action :authorized, only: [:index]
 
       def index
-        reviews = current_user.reviews
+        reviews = Review.all
         render json: ReviewSerializer.new(reviews).serialized_json
       end
 
