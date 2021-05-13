@@ -1,17 +1,14 @@
 class ReviewsController < ApplicationController
 
   before_action :find_review, only: [:show, :edit, :update, :delete]
-  before_action :authorized, only: [:index]
-
-    # def index
-    #   reviews = current_user.reviews
-    #   render json: ReviewSerializer.new(reviews).serialized_json
-    # end
+  # before_action :authorized, only: [:index]
 
     def index
-      reviews = Review.all
+        reviews = Review.all
+        # reviews = current_user.reviews
       render json: ReviewSerializer.new(reviews).serialized_json
     end
+
 
     def show
       if review

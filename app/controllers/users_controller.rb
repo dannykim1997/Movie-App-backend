@@ -1,5 +1,16 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized
+  # skip_before_action :authorized
+
+  def login
+    @user = User.find_by(username: user_params[:username])
+    if @user && @user.password == user_params[:password]
+      # render json: UserSerializer.new(@user).serialized_json
+      render :json => UserSerializer.new(@user).serialized_json
+    else
+      render :json => { "msg": "Login failed.." }
+    end
+  end
+
 
   def index
     @users = User.all
@@ -11,7 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       # token = JWT.encode({ :user_id => @user.id }, ENV['SUPER_SECRET_KEY'])
       # render :json => { "token": token }
-      render :json => { "msg": "Now login.." }
+      render :json => @user
     else
       render :json => { "msg": "Signup failed.." }
     end
