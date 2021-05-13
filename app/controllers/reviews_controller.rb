@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
 
-  before_action :find_review, only: [:show, :edit, :update, :delete]
+  before_action :find_review, only: [:show, :edit, :update]
   # before_action :authorized, only: [:index]
 
     def index
@@ -30,6 +30,27 @@ class ReviewsController < ApplicationController
         render json: { msg: 'Something went wrong'}
       end
     end
+
+    def update
+        if review.update(review_params)
+          render json: ReviewSerializer.new(review).serialized_json
+        else
+          render json: { msg: 'Something went wrong'}
+        end
+    end
+    
+
+    def destroy
+      review = Review.find_by(id: 
+        params[:id]
+        )
+      if review.destroy
+        render json: { msg: 'Review deleted'}
+      else
+        render json: { msg: 'Something went wrong'}
+      end
+    end
+    
 
     private
 
