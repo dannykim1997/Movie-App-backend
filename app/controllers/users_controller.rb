@@ -7,7 +7,8 @@ class UsersController < ApplicationController
       # render json: UserSerializer.new(@user).serialized_json
       render :json => UserSerializer.new(@user).serialized_json
     else
-      render :json => { "msg": "Login failed.." }
+      # render :json => { "msg": "Login failed.." }
+      render :json => nil
     end
   end
 
