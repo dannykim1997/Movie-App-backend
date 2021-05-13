@@ -6,7 +6,8 @@ get '/popularmovies', to: "movies#popular_movies"
 get '/comedymovies', to: "movies#comedy_movies"
 
 resources :users, only: [:index, :create]
-
+post '/login', to: 'users#login'
+post '/signup', to: 'users#create'
 
 resources :movies
 resources :reviews
